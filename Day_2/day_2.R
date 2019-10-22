@@ -256,6 +256,7 @@ sort(v)
 order(v)
 v[order(v)] # sort(v)랑 똑같은 결과
 
+# GUI로 파일 선택할 수 있게끔 
 emp <- read.csv(file.choose(),
                 stringsAsFactors = F)
 emp
@@ -274,7 +275,9 @@ emp["ename"]
 emp[,c(2,3,6)]
 emp[,c("ename","job","sal")]
 subset(emp,select = c(ename, job, sal))
+# subset(emp, , c(ename, job, sal)) # 추천하지는 않지만 가능은 함
 ?subset
+
 # 3. emp에서 1,2,3 행 들만
 emp[1:3,]
 emp[c(1,2,3),]
@@ -284,15 +287,14 @@ emp[9,]
 emp$ename=="KING"
 emp[c(F,F,F,F,F,F,F,F,T,F,F,F,
       F,F,F,F,F,F,F,F),]
+emp[emp$ename == "KING",]
 subset(emp,subset= emp$ename=="KING")
 subset(emp,emp$ename=="KING") 
-
-emp[emp$ename=="KING",] 
 
 # 5. select ename,sal from emp where sal>=2000
 subset(emp, select=c("ename","sal"), subset= emp$sal>= 2000)
 subset(emp, emp$sal>= 2000, c("ename","sal"))
-emp[emp$sal>=2000,c("ename","sal")]
+emp[emp$sal>=2000, c("ename","sal")]
 
 # 6. select ename,sal from emp where sal between 2000 and 3000
 subset(emp, select=c("ename","sal"), subset=(sal>=2000 & sal<=3000))
