@@ -96,3 +96,105 @@ word_ansi = scan("sample_ansi.txt", what="")
 word_utf8 = scan("sample_utf8.txt", what="", encoding="UTF-8")
 lines_ansi = readLines("sample_ansi.txt")
 lines_utf8 = readLines("sample_utf8.txt", encoding="UTF-8")
+
+# 제어문
+randomNum = sample(1:10, 1)
+if (randomNum > 5){
+  cat(randomNum, ": 5보다 크다", "\n")
+}else{
+  cat(randomNum, ": 5보다 작다", "\n")
+}
+
+if(randomNum %% 2){
+  cat(randomNum, ": 홀수", "\n")
+}else{
+  cat(randomNum, "짝수", "\n")
+}
+
+# 학점 계산기
+score = sample(1:100, 1)
+
+if (score >= 90){
+  cat(score, "점은 A등급입니다.\n", sep = "")
+}else if (score >= 80){
+  cat(score, "점은 B등급입니다.\n", sep = "")
+}else if (score >= 70){
+  cat(score, "점은 C등급입니다.\n", sep = "")
+}else if (score >= 60){
+  cat(score, "점은 D등급입니다.\n", sep = "")
+}else{
+  cat(score, "점은 F등급입니다.\n", sep = "")
+}
+
+
+# for loop
+for (data in month.name){
+  print(data)
+}
+
+# 중괄호 안 넣을 시 수행문으로 인식되지 않은 뒤의 print는 수행문이 모두 실행된 후에 실시되는 것
+for (data in month.name) print(data); print("A");
+# 중괄호를 넣을 시 모두 수행문으로 인식함
+for (data in month.name) {print(data); print("A")}
+
+for (n in 1:5){
+  cat("Hello\n")
+}
+
+# 2중 for loop
+for (i in 1:5){
+  for (j in 1:5){
+    cat("I is", i, "and J is", j, "\n")
+  }
+}
+
+# 구구단
+for (i in 2:9){
+  for (j in 1:9){
+    if (j == 1){
+      cat("----", i, "단----", "\n", sep="")
+      cat("\n")
+    }
+    cat(i, "X", j, "=", i*j, "\n")
+  }
+  cat("\n")
+}
+
+# switch / 수, 문자열에 따라 다른 방식으로 작동함
+# R에서는 구문이 아닌 함수로 제공하는 특징이 있음
+# 숫자의 경우
+# switch(expr = 수치, 식1, 식2, 식3)
+# 문자열의 경우
+# switch(expr = 문자열, 값1 = 식1, 값2 = 식2, 값3 = , 값4 = 식3, 식4)
+# 값3의 경우, 값3 | 값4 = 식3 을 의미하며, 디폴트 값으로 식4
+
+# 문자열 switch 예시
+Season = function(){
+  month = sample(1:12, 1)
+  month = print(paste(month, "월", sep = ""))
+  result = switch(EXPR = month,
+                  "12월"=, "1월"=, "2월"="겨울",
+                  "3월"=, "4월"=, "5월"="봄",
+                  "6월"=, "7월"=, "8월"="여름",
+                  "가을")
+  cat(month, "은 ", result, "입니다.\n", sep="")
+}
+
+for (i in 1:30){
+  Season()
+}
+
+# 숫자 switch 예시
+num = sample(1:10, 1)
+num
+switch(num, "A", "B", "C", "D") # 1, 2, 3, 4인 경우에만 리턴
+
+for (num in 1:10){
+  cat(num, ":", switch(num, "A", "B", "C", "D"), "\n")
+}
+
+# 순차적인 조건이 아닐 경우에는 문자열로 바꿔서 처리를 해야함
+for (num in 1:10){
+  num = as.character(num)
+  cat(num, ":", switch(num, "7"="A", "8"="B", "9"="C", "10"="D", "Nothing"), "\n")
+}
