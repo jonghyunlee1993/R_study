@@ -29,4 +29,9 @@ plot(mN)
 
 # party / binning을 위한 패키지
 # binning은 연속형 변수를 범주형으로 바꿔주는 것을 의미함
+install.packages("party")
+library(party)
 
+iris$Petal.Width.c = cut(iris$Petal.Width, 5)
+a = ctree(Species ~., data = iris)
+plot(a)
