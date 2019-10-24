@@ -55,14 +55,14 @@ if (score >= 90){
 #                       ifelse(score >= 70, 3,
 #                              ifelse(score >= 60, 4, 5))))
 
-# grade = ifelse(score %% 10 == 9, 1, 
+# grade = ifelse(score %% 10 == 10| score %% 10 == 9, 1, 
 #                ifelse(score %% 10 == 8, 2, 
 #                       ifelse(score %% 10 == 7, 3,
 #                              ifelse(score %% 10 == 6, 4, 5))))
 
 
-grade_result = switch(grade, "A 등급", "B 등급", "C 등급", "D 등급", "F 등급")
-cat(score, "점은 ", grade_result, "입니다.", sep="")
+level = switch(grade, "A 등급", "B 등급", "C 등급", "D 등급", "F 등급")
+cat(score, "점은 ", level, "입니다.", sep="")
 
 # Q5
 alpha = paste(LETTERS, letters, sep="")
