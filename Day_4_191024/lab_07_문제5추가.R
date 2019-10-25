@@ -54,6 +54,8 @@ countEvenOdd = function(vec){
     }
     result = list(even, odd)
     names(result) = c('even', 'odd')
+    
+    # result = list(even = even, odd = odd)
   }
   return(result)
 }
@@ -64,7 +66,7 @@ countEvenOdd(c('가', '나'))
 # Q4
 vmSum = function(vec){
   result = c()
-  if (!is.vector(vec) | class(vec) == 'list'){
+  if (!is.vector(vec) | is.list(vec)){
     print("벡터만 전달하숑!")
     result = NULL
   }else if (!is.numeric(vec)){
@@ -87,7 +89,7 @@ vmSum2 = function(vec){
   result = c()
   
   tryCatch({
-    if (!is.vector(vec) | class(vec) == 'list'){
+    if (!is.vector(vec) | is.list(vec)){
       result = NULL
       stop("벡터만 전달하숑!")
     }else if (!is.numeric(vec)){

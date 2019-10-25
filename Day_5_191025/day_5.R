@@ -99,3 +99,61 @@ testAll = function(p){
 testAll("오류 테스트")
 testAll("경고 테스트")
 testAll("정상 테스트")
+
+# is.na 
+f.case1 = function(x){
+  if(is.na(x)){
+    return("NA")
+  }else{
+    return("NO")
+  }
+}
+
+f.case1(100)
+f.case1(c(10,20,30))
+f.case1(1:5)
+f.case1(c(10, NA, 20))
+
+# any & is.na / 하나라도 true 이면 true
+f.case2 = function(x){
+  if(any(is.na(x))){
+    return("NA")
+  }else{
+    return("NO")
+  }
+}
+
+f.case2(100)
+f.case2(c(10,20,30))
+f.case2(1:5)
+f.case2(c(10, NA, 20))
+
+# sum & is.na
+f.case3 = function(x){
+  if(sum(is.na(x))){
+    return("NA")
+  }else{
+    return("NO")
+  }
+}
+
+f.case3(100)
+f.case3(c(10,20,30))
+f.case3(1:5)
+f.case3(c(10, NA, 20))
+
+# Sys.sleep
+testSleep = function(x){
+  for (data in 6:10){
+    # cat(data, "\n")
+    if (x){
+      Sys.sleep(1)
+      cat(data, "\n")
+    }
+  }
+  return()
+}
+
+testSleep(F)
+testSleep(T)
+
