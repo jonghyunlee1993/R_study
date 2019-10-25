@@ -1,0 +1,25 @@
+testAll <-function(p){
+  tryCatch({
+    if(p=="오류테스트"){
+      testError(-1)
+    }else if (p =="경고테스트"){
+      testWarn(6)
+    }else{
+      cat("정상 수행..\n")
+      print(testError(2))
+      print(testWarn(3))
+    }
+  },warning = function(w){
+    print(w)
+    cat("-.-;;\n")
+  }, error = function(e){
+    print(e)
+    cat("ㅠㅠ \n")
+  },finally ={
+    cat("오류, 경고 발생 여부를 따라서 반드시 수행되는 부분입니다요..\n")
+  })
+}
+
+testAll("오류테스트")
+testAll("경고테스트")
+testAll("아무거나")

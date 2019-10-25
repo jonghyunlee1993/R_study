@@ -64,4 +64,38 @@ test1 = function(){
 
 test1()
 
+# R에서는 try 함수로 구현
+test2 = function(){
+  cat("Go\n")
+  try(testError(-1))
+  print("Go on?")
+}
 
+test2()
+
+# tryCatch({try codeblock}, warning = function(w), error = function(e), finally = {code block})
+testAll = function(p){
+  tryCatch({
+    if(p == "오류 테스트"){
+      testError(-1)
+    }else if (p == "경고 테스트"){
+      testWarn(6)
+    }else{
+      cat("정상 수행\n")
+      print(testError(2))
+      print(testWarn(3))
+    }
+  }, warning = function(w){ # warning이 발생해야만 수행
+    print(w)
+    cat("warning\n")
+  }, error = function(e){ # error이 발생해야만 수행
+    print(e)
+    cat("error\n")
+  }, finally = { # error, warning의 여부와 무관하게 수행
+    cat("오류, 경고 발생 여부를 떠나 반드시 수행되는 부분")
+  })
+}
+
+testAll("오류 테스트")
+testAll("경고 테스트")
+testAll("정상 테스트")
