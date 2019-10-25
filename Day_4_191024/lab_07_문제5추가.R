@@ -80,3 +80,33 @@ vmSum(c(1,2,3,4,5))
 vmSum(c(1,2,3,4,'가'))
 vmSum(list('가'))
 vmSum(array(1:16, c(2,2,4)))
+
+
+# Q5
+vmSum2 = function(vec){
+  result = c()
+  
+  tryCatch({
+    if (!is.vector(vec) | class(vec) == 'list'){
+      result = NULL
+      stop("벡터만 전달하숑!")
+    }else if (!is.numeric(vec)){
+      result = c(0)
+      warning("숫자 벡터를 전달하숑!")
+    }else{
+      result = sum(vec)
+    }
+  }, error = function(e){
+    print(e)
+  }, warning = function(w){
+    print(w)
+  }, finally = {
+    return(result)
+  }
+  )
+}
+
+vmSum2(c(1,2,3,4,5))
+vmSum2(c(1,2,3,4,'가'))
+vmSum2(list('가'))
+vmSum2(array(1:16, c(2,2,4)))
