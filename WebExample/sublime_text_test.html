@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>맛보기</title>
+	<style>
+		span{
+			color : blue;
+		}
+	</style>
+</head>
+<body>
+	<h1>Static 연습</h1>
+	<span><h2 id='static'>현재 시간은 17시 3분 15초 입니다.</h2></span>
+	<hr>
+	<h1>Dynamic 연습</h1>
+	<h2 id='dynamic'></h2>
+	
+	<form action="">
+		<input type="submit", value="새로고침">
+	</form>
+
+	<script>
+		// 동적인 내용을 표현하기 위해서는 java script를 사용해야 함
+		// var h1dom = document.getElementById('dynamic');
+		// id는 하나만 지정할 수 있기 때문에 getElement
+		var h1dom = document.getElementsByTagName('h2')[1];
+		// TagName은 여러 개가 있을 수 있기 때문에 getElements
+		// 두 번째 <h2> 태그의 내용을 가져오기 위해서 [1]을 하였음
+		var d = new Date();
+		// 짝수 초 홀수 초에 따라서 색깔을 바꾸고 싶었는데 JS를 모르겠음..
+		// if ( d.getSeconds %= 2 == 1){
+		// 	document.getElementsByTagName('h2')[1].style.color = '#0000ff';
+		// }else{
+		// 	document.getElementsByTagName('h2')[1].style.color = '#ff6347';
+		// }
+
+		h1dom.textContent = "현재 시간은 " + 
+							d.getHours() + "시 " +
+							d.getMinutes() + "분 " +
+							d.getSeconds() + "초 입니다";
+	</script>
+</body>
+</html>
