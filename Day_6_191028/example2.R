@@ -259,6 +259,9 @@ yy = c(11,12,13,14,15,16,7,8,9)
 df1 = data.frame(x,x1)
 df2 = data.frame(y,y1)
 
+c(df1,df2)
+bind_rows(df1, df2)
+
 dplyr::inner_join(df1, df2, by=c("x" = "y"))
 dplyr::full_join(df1, df2, by=c("x" = "y"))
 dplyr::left_join(df1, df2, by=c("x" = "y"))
