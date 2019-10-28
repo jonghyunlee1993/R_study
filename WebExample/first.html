@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>맛보기</title>
+  <style>
+    a {
+      color :red;
+      text-decoration : none;
+    }
+    a:hover {
+      font-weight :bold;
+    }
+    span { 
+      background-color : yellow;
+    }
+    .target1 { 
+      color : #ff0080;
+    }
+    .target2 {
+      color : green;
+    }
+      h3 > span {
+      font-size : 3em;
+    }
+    img {
+      
+    }
+    #two{
+      opacity : 0.4;
+    }
+  </style>
+</head>
+<body>
+  <h1>HTML <span class = "target1">학습</span></h1>
+  <hr>
+  <h2 class = "target1">HTML을 학습합니다.</h2><br>
+  <h3><span>HTML</span>을 학습합니다.</h3><br>
+  <h4>HTML을 학습합니다.</h4><br>
+  <h5>HTML을 학습합니다.</h5><br>
+  <h6>HTML을 학습합니다.</h6><br>
+  <div style = "color:blue;">테스트</div>
+  <a href = "http://www.w3schools.com">
+    Visit W3Schools.com!</a><br>
+  <a href = "http://www.r-project.org">
+    Visit R.org!</a><br>
+  <h1>HTML <span class = "target2">재미</span>있어요!</h1> 
+  <br>
+  <img src = "totoro.png" width = 100><br>
+  <img width = 100>
+  <img id = "two" src = "totoro.png" width = 100><br>
+  <img width = 200>
+  <img id = "three" src = "totoro.png" width = 100>
+  <hr>
+  <ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>Java Script</li>
+  </ul>
+  <hr>
+  <ol>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>Java Script</li>
+  </ol>
+  <script>
+    var dom = document.getElementById("two");
+    dom.onclick = function(){
+      alert("두 번째 토토로를 클릭하셨습니다.")
+    }
+    
+    var dom2 = document.getElementById("three");
+    dom2.onmouseover = function(){
+       alert("세 번째 토토로를 클릭하셨습니다.")
+    }
+  </script>
+</body>
+</html>

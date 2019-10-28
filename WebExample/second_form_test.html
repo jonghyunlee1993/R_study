@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>맛보기</title>
+</head>
+<body>
+  <h1>폼태그 학습</h1>
+  <hr>
+  <form method = "" action = "....">
+    First Name: <input type="text" name="fname"><br>
+    Last Name: <input type="text" name = "lname"><br>
+    <input id = "button" type = "submit" value = "Submit">
+    <br><br>
+    검색: <input type="text" name="q">
+    <input type="submit" value="검색">
+  </form> 
+  <script>
+        var dom = document.getElementById("button");
+    dom.onclick = function(){
+      alert("입력을 완료하였습니다.")
+    }
+  </script>
+  
+</body>
+</html>

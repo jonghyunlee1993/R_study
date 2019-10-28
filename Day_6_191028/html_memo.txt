@@ -1,0 +1,25 @@
+
+<style>{
+	이 부분은 전체 스타일에 대한 전역적 정의  
+}
+
+span { 
+	tag selector
+}
+.target1{
+	class selector
+}
+
+h3 > span {
+	h3 태그의 자식 태그로써 span의 속성 정의
+}
+
+h3  span {
+	h3 태그의 자식 뿐만 아니라 자손 태그로써 span의 속성 정의
+}
+
+span 태그는 부분에 적용하는 태그 div 태그는 전체에 대한 적용
+span 태그는 개행이 일어나지 않는 반면 div 태그는 개행이 발생함
+span 태그에 각각의 class를 정의하였기 때문에 각 class별로 다른 설정을 적용할 수 있음
+
+hr 태그는 수평선을 그어줌, br 태그는 한줄 띄어쓰기
