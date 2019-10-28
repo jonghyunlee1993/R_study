@@ -235,11 +235,12 @@ rnorm(5, mean = 0, sd = 1)
 
 # [실습] 수학 관련 내장함수 사용 예 
 vec<-1:10
-prod(vec)
+prod(vec) # product 전체 곱
+factorial(vec) # factorial 곱
 factorial(5)
 abs(-5)
 sqrt(16) # 4 
-cumsum(vec)
+cumsum(vec) # 누적 합합
 
 log(10) # 10의 자연로그(밑수가 e)
 log10(10) # 10의 일반로그(밑수 10) 
@@ -247,9 +248,30 @@ log10(10) # 10의 일반로그(밑수 10)
 
 # [실습] 집합연산 관련 내장함수 사용 예   
 x <- c(1, 3, 5, 7, 9)
+x1 = c(2,3,4,5,6)
 y <- c(3, 7)
+y1 = c(56,6)
 
-union(x, y)
-setequal(x, y)
-intersect(x, y)
-setdiff(x, y)
+xx = c(1,2,3,4,5,6,7,8,9,10)
+yy = c(11,12,13,14,15,16,7,8,9)
+
+# dplyr SQL join 문 실습
+df1 = data.frame(x,x1)
+df2 = data.frame(y,y1)
+
+dplyr::inner_join(df1, df2, by=c("x" = "y"))
+dplyr::full_join(df1, df2, by=c("x" = "y"))
+dplyr::left_join(df1, df2, by=c("x" = "y"))
+dplyr::right_join(df1, df2, by=c("x" = "y"))
+
+union(x, y) # 합집합
+setequal(x, y) # 같은지 비교교
+intersect(x, y) # 교집합
+setdiff(x, y) # 차집합 / 앞의 집합에서 뒤의 집합을 뺸다
+setdiff(y, x)
+
+setdiff(xx, yy)
+setdiff(yy, xx)
+
+# 각각의 차집합의 합집합은 합집합에서 교집합을 뺀 것과 같다
+setequal(union(setdiff(xx,yy), setdiff(yy,xx)), setdiff(union(xx,yy),intersect(xx,yy)))
