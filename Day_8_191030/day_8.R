@@ -71,3 +71,27 @@ http_standard = GET('http://www.w3.org/Protocols/rfc2616/rfc2616.html')
 title2 = html_nodes(read_html(http_standard), "div.toc h2")
 title2 = html_text(title2)
 title2
+
+# post 방식 예제
+game = POST('http://www.gevolution.co.kr/score/gamescore.asp?t=3&m=0&d=week',
+            encode = "form", body = list(txtPeriodW = '2019-04-10'))
+# form 은 query 를 의미함
+title3 = html_text(html_nodes(read_html(game), 'a.tracktitle'))
+title3
+
+# 파일 및 이미지 다운로드도 가능하다
+# pdf : 이미지와 동일하게 이진 파일의 형식임
+res = GET('https://cran.r-project.org/web/packages/httr/httr.pdf')
+writeBin(content(res, 'raw'), "C:/Temp/httr.pdf")
+
+# jpg
+url = "http://unico2013.dothome.co.kr/productlog.html"
+url_base = "http://unico2013.dothome.co.kr/"
+html = read_html(url)
+imgs = html_nodes(html, 'img')
+img_src = html_attr(imgs, 'src')
+
+for (i in 1:length(img_src)){
+  res = GET(paste0(url_base, img_src[i]))
+  writeBin(content(res, "raw"), paste0('c:/Temp/', img_src[i]))
+}
