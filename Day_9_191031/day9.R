@@ -158,3 +158,79 @@ top
 df <- xmlToDataFrame(getNodeSet(doc, "//itemList"))
 df
 View(df)
+
+
+# selenium 실습
+# yes24는 동적 크롤링이 필요 AJAX를 이용해 필요한 부분만 요청하는 시스템을 사용하고 있기 때문
+# mobile에서는 AJAX를 적극적으로 사용하고 있음
+# 개발자 도구의 element는 렌더링 완료된 결과를 보여주기 때문에 동적 컨텐츠를 확인할 수 없음
+
+# install.packages("RSelenium")
+library(RSelenium)
+
+url = "http://www.yes24.com/Product/goods/40936880"
+
+# localhost는 나의 pc를 의미함
+remDr<-remoteDriver(remoteServerAddr= "localhost", port = 4445, browserName= "chrome")
+remDr$open()
+remDr$navigate("http://www.google.com/ncr")
+
+webElem = remDr$findElement(using = "css", "[name = 'q']")
+webElem$sendKeysToElement(list("JAVA", key = "enter"))
+
+webElem = remDr$findElement(using = "css", "[id = 'hpcanvas']")
+webElem$clickElement()
+
+remDr$findElement(using = )
+
+webElem = remDr$findElement(using = "css", '[class = "gb_e"]')
+webElem$clickElement()
+
+remDr$navigate("http://www.naver.com")
+webElem = remDr$findElement(using = "css", "[id = 'query']")
+webElem$sendKeysToElement(list("Python", key = "enter"))
+
+url = "http://comic.naver.com/comment/comment.nhn?titleId=570503&no=135"
+remDr$navigate(url)
+more = remDr$findElements(using="css", 'span.u_cbox_in_view_comment')
+# sapply(more, function(x){x$clickElement()})
+more$clickElement()
+
+more = remDr$findElements(using="css", 'a.u_cbox_select')
+sapply(more, function(x){x$clickElement()})
+
+more = remDr$findElements(using="css", '[class = "u_cbox_select"]')
+sapply(more, function(x){x$clickElement()})
+
+# 2 page 
+page = remDr$findElements(using="css", 'a.u_cbox_page')
+page[[1]]$clickElement()
+
+# 3 page
+page = remDr$findElements(using="css", 'a.u_cbox_page')
+page[[2]]$clickElement()
+
+# 4 page
+page = remDr$findElements(using="css", 'a.u_cbox_page')
+page[[3]]$clickElement()
+
+
+remDr$navigate(url)
+more = remDr$findElements(using="css", 'a.u_cbox_select')
+sapply(more, function(x){x$clickElement()})
+for (i in 4:12){
+  next_css = paste0("#cbox_module > div > div.u_cbox_paginate > div > a:nth-child(", i, ") > span")
+  next_page = remDr$findElement(using = 'css', next_css)
+  next_page$clickElement()
+  Sys.sleep(3)
+}
+
+remDr$navigate(url)
+more = remDr$findElements(using="css", 'a.u_cbox_select')
+sapply(more, function(x){x$clickElement()})
+for (i in 1:10){
+  next_xpath = paste0("//*[@id='cbox_module']/div/div[7]/div/a[", i, "]/span")
+  next_page = remDr$findElement(using = 'xpath', next_xpath)
+  next_page$clickElement()
+  Sys.sleep(3)
+}
