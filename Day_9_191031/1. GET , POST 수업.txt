@@ -1,0 +1,70 @@
+http://unico2013.dothome.co.kr/crawling/get.php?name=%EB%B0%B0%EC%9C%A4%EC%84%B1&age=27
+
+16진수로 넘어간다.
+status = 200  -> 요청이 성공적으로 끝났다.
+
+
+
+Request URL: http://unico2013.dothome.co.kr/crawling/get.php?name=%EB%B0%B0%EC%9C%A4%EC%84%B1&age=27
+
+Request Method: GET          -> url뒤에(get.php뒤에 쿼리가 ?가 붙어서 데이터를 요청하는 것으로 보았을 때)  ?가 붙는것으로 get방식 예층가능. 개발자 도구에서 확실히 확인 가능
+
+Status Code: 200 OK
+
+Remote Address: 112.175.184.42:80
+
+Referrer Policy: no-referrer-when-downgrade
+
+
+
+
+쿼리 문자열이나 폼 데이터가 서버로 전달될 때 W3C 규칙
+1. name = value 형식을 갖추어야 한다.
+2. 여러개의 name = value를 가질 수 있으며, &로 구분한다.
+3. 영문대소문자., 숫자, 일부 특수문자는 그대로 전달된고 그 외의 문자는 [%16진수코드값] 으로 전달된다.
+  (abc~ 그대로 전달, 한글은 utf-8로 16진수 3바이트 )
+4. 공백은 + 기호로 전달되거나 %16진수 코드값으로 전달된다.
+
+
+
+*[ 쿼리문자열 ]로 입력해도 되고 [ 폼 태그 ]를 통해서 입력할 수 있다.
+
+http://unico2013.dothome.co.kr/crawling/get.php?name=%EB%B0%B0%EC%9C%A4%EC%84%B1&age=28
+쿼리문자열을 읽을 때 원하는 이름으로 전달해야 한다. value값을 우리가 넣는 것.
+
+<h2>GET</h2>
+<a href="http://unico2013.dothome.co.kr/crawling/get.php?name=둘리&age=1000">Query 문자열을 추가하여 요청</a><br>
+<form method="GET" action="http://unico2013.dothome.co.kr/crawling/get.php">
+이름 <input type="text" name="name"><br>
+나이 <input type="number" name="age"><br>
+<input type="submit" value="입력폼으로 요청">
+
+
+
+
+
+요청 변수 : 쿼리
+name = query ( encoding = UTF-8 ) 
+
+출력 결과 : 태그 
+
+
+
+
+post 방식은 반드시 post방식을 써야한다. (아니면 에이쟉스나)
+
+Request URL: http://unico2013.dothome.co.kr/crawling/post.php    ~ post 전용 프로그램으로 쌤이 따로 만들었다.
+
+폼 데이터 ~쿼리가 안 붙어서 간다.
+바디 태그 안에 작성되서 간다.
+
+
+
+
+
+
+
+
+
+	 
+
