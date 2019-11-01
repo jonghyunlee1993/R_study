@@ -94,7 +94,7 @@ for (i in seq(1, store_num, 3)){
 
 # result = data.frame(store_name, store_addr, store_tel)
 result = data.frame(store_name)
-
+write.csv(result, "stabucks.csv")
 # scroll_bar = remDr$findElement(using='css', '#mCSB_3_container')
 # 
 # item = remDr$findElements(using='xpath', '//*[@id="mCSB_3_container"]/ul/li')
