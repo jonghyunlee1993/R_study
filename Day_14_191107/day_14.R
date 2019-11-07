@@ -266,7 +266,7 @@ df <- read.csv("전국전기차충전소표준데이터.csv", stringsAsFactors=F
 str(df) 
 head(df)
 names(df)
-#df_add <- as.data.frame(df[,14])
+#df_add <- as.data.frame(df[,13])
 #df_add; View(df_add)
 #names(df_add) <- c("address")
 #head(df_add)
@@ -289,3 +289,155 @@ ggmap(map_korea)+geom_point(data=mut_df_add, aes(x=lon, y=lat), alpha=0.5, size=
 
 map_seoul <- get_map(location="seoul", zoom=11, maptype="roadmap")    
 ggmap(map_seoul)+geom_point(data=mut_df_add, aes(x=lon, y=lat), alpha=0.5, size=5, color="blue")
+
+# ------------------------------------------------
+#leaflet 그리기
+
+# install.packages("leaflet")
+library(leaflet)
+library(dplyr)
+library(ggmap)
+
+seoul_lonlat <- geocode("seoul")
+
+leaflet()
+
+leaflet() %>% addTiles()
+
+map0 <- leaflet() %>% setView(lng = seoul_lonlat$lon, lat = seoul_lonlat$lat, zoom = 16)%>% addTiles()
+map0
+
+map1 <- map0 %>% addTiles() 
+map1
+
+mk <- 학원lonlat
+lan <- mk$lon
+lat <- mk$lat
+
+msg <- '<strong><a href="http://www.multicampus.co.kr" style="text-decoration:none">멀티캠퍼스</a></strong><hr>우리가 공부하는 곳 ㅎㅎ'
+# 해당 버튼을 누르면 보이게 끔
+map2 <- leaflet() %>% setView(lng = mk$lon, lat = mk$lat, zoom = 16) %>% 
+  addTiles() %>% 
+  addCircles(lng = lan, lat = lat, color='green', popup = msg )
+map2
+
+map2 <- leaflet() %>% setView(lng = mk$lon, lat = mk$lat, zoom = 18) %>%
+  addTiles() %>% 
+  addCircles(lng = lan, lat = lat, color='green', popup = msg )
+map2
+
+map2 <- leaflet() %>% setView(lng = mk$lon, lat = mk$lat, zoom = 5) %>% 
+  addTiles() %>% 
+  addCircles(lng = lan, lat = lat, color='green', popup = msg )
+map2
+
+map2 <- leaflet() %>% setView(lng = mk$lon, lat = mk$lat, zoom = 1) %>% addTiles() %>% addCircles(lng = lan, lat = lat, color='green', popup = msg )
+map2
+
+
+# addPopups() : 바로 팝업창 뜨게끔
+content1 <- paste(sep = '<br/>',"<b><a href='https://www.seoul.go.kr/main/index.jsp'>서울시청</a></b>",'아름다운 서울','박원순 시장님 화이팅!!')
+map3<-leaflet() %>% addTiles() %>%  addPopups(126.97797, 37.56654, content1, options = popupOptions() )
+map3
+
+content2 <- paste(sep = '<br/>',"<b><a href='http://www.snmb.mil.kr/mbshome/mbs/snmb/'>국립서울현충원</a></b>",'1955년에 개장', '2013년 ‘서울 미래유산’으로 등재')
+# X 버튼 안 보이게
+# 여러 개 팝업을 볼 수 있게끔
+map3<-leaflet() %>% addTiles() %>%  
+  addPopups(c(126.97797, 126.97797),  c(37.56654, 37.50124) , c(content1, content2), options = popupOptions(closeButton = FALSE) )
+map3
+
+wifi_data = read.csv('wifi_data.csv', encoding = 'utf-8', stringsAsFactors = FALSE)
+
+leaflet(wifi_data) %>% 
+  setView(lng = seoul_lonlat[1], 
+          lat = seoul_lonlat[2], 
+          zoom = 11) %>% 
+  addTiles() %>% 
+  addCircles(lng = ~lon, lat = ~lat)
+
+
+leaflet(wifi_data) %>% 
+  setView(lng = seoul_lonlat[1], lat = seoul_lonlat[2], zoom = 11) %>% 
+  addProviderTiles('Stamen.Toner') %>% 
+  addCircles(lng = ~lon, lat = ~lat)
+
+
+leaflet(wifi_data) %>% 
+  setView(lng = seoul_lonlat[1], lat = seoul_lonlat[2], zoom = 11) %>% 
+  addProviderTiles('CartoDB.Positron') %>% 
+  addCircles(lng = ~lon, lat = ~lat)
+
+leaflet(wifi_data) %>% 
+  setView(lng = seoul_lonlat[1], lat = seoul_lonlat[2], zoom = 11) %>% 
+  addProviderTiles('Stamen.Toner') %>% 
+  addCircles(lng = ~lon, lat = ~lat, popup = ~div)
+?colorFactor
+telecom_color = colorFactor('Set1', wifi_data$div)
+
+str(telecom_color)
+mode(telecom_color)
+leaflet(wifi_data) %>% 
+  setView(lng = seoul_lonlat[1], lat = seoul_lonlat[2], zoom = 11) %>% 
+  addProviderTiles('Stamen.Toner') %>% 
+  addCircles(lng = ~lon, lat=~lat, popup = ~div, color = ~telecom_color(div))
+
+
+# leaflet과 우리나라 행정구역 지도 활용
+# # RStudio 를 재기동한 후에 설치한다.(안하면 재앙이 따를거임!!)
+install.packages("devtools") 
+devtools::install_github("cardiomoon/Kormaps")
+library(Kormaps)
+
+names(korpopmap1)
+names(korpopmap2)
+names(korpopmap3)
+Encoding(names(korpopmap1))<-'UTF-8'
+Encoding(names(korpopmap2))<-'UTF-8'
+Encoding(names(korpopmap3))<-'UTF-8'
+names(korpopmap1)
+names(korpopmap2)
+names(korpopmap3)
+
+head(korpopmap1,1)
+head(korpopmap2,1)
+head(korpopmap3,1)
+
+Encoding(korpopmap2@data$name)<-'UTF-8'
+Encoding(korpopmap2@data$행정구역별_읍면동)<-'UTF-8'
+
+korpopmap2@data <- korpopmap2@data[-26:-251,]
+korpopmap2@polygons<-korpopmap2@polygons[-26:-251]
+mymap <- korpopmap2@data
+head(mymap)
+View(korpopmap2)
+
+crime <- read.csv('2017crime.csv')
+head(crime)
+palette1<-colorNumeric(palette = 'Oranges', domain = crime$살인_발생)
+popup1 <- paste0(mymap$name,'<br> 살인 : ',crime$살인_발생, '건')
+map4<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
+  addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup1, color=~palette1(crime$살인_발생), group='살인')
+map4
+
+
+palette2<-colorNumeric(palette = 'Blues', domain = crime$폭력_발생)
+popup2 <- paste0(mymap$name,'<br> 폭력 : ',crime$폭력_발생, '건')
+map5<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
+  addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup2, color=~palette2(crime$폭력_발생), group='폭력')
+map5
+
+
+palette3<-colorNumeric(palette = 'Reds', domain = crime$범죄_발생_총합)
+popup3 <- paste0(mymap$name,'<br> 범죄_발생_총합 : ',crime$범죄_발생_총합, '건')
+map6<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
+  addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup3, color=~palette3(crime$범죄_발생_총합),group='총 범죄')
+
+map6
+
+palette2<-colorNumeric(palette = 'Blues', domain = crime$폭력_발생)
+popup2 <- paste0(mymap$name,'<br> 폭력 : ',crime$폭력_발생, '건')
+map8<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
+  addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup2, color=~palette2(crime$폭력_발생), group='폭력') %>%
+  addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup3, color=~palette3(crime$범죄_발생_총합),group='총 범죄')
+map8
