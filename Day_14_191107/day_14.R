@@ -344,7 +344,8 @@ content2 <- paste(sep = '<br/>',"<b><a href='http://www.snmb.mil.kr/mbshome/mbs/
 # X 버튼 안 보이게
 # 여러 개 팝업을 볼 수 있게끔
 map3<-leaflet() %>% addTiles() %>%  
-  addPopups(c(126.97797, 126.97797),  c(37.56654, 37.50124) , c(content1, content2), options = popupOptions(closeButton = FALSE) )
+  addPopups(c(126.97797, 126.97797),  c(37.56654, 37.50124) , 
+            c(content1, content2), options = popupOptions(closeButton = FALSE) )
 map3
 
 wifi_data = read.csv('wifi_data.csv', encoding = 'utf-8', stringsAsFactors = FALSE)
@@ -354,7 +355,7 @@ leaflet(wifi_data) %>%
           lat = seoul_lonlat[2], 
           zoom = 11) %>% 
   addTiles() %>% 
-  addCircles(lng = ~lon, lat = ~lat)
+  addCircles(lng = ~lon, lat = ~lat) # 물결 표시 필수
 
 
 leaflet(wifi_data) %>% 
@@ -373,7 +374,7 @@ leaflet(wifi_data) %>%
   addProviderTiles('Stamen.Toner') %>% 
   addCircles(lng = ~lon, lat = ~lat, popup = ~div)
 ?colorFactor
-telecom_color = colorFactor('Set1', wifi_data$div)
+telecom_color = colorFactor('Set1', wifi_data$div) # 색상 세트는 Set1, 데이터는 wifi_data$div
 
 str(telecom_color)
 mode(telecom_color)
@@ -415,14 +416,14 @@ View(korpopmap2)
 crime <- read.csv('2017crime.csv')
 head(crime)
 palette1<-colorNumeric(palette = 'Oranges', domain = crime$살인_발생)
-popup1 <- paste0(mymap$name,'<br> 살인 : ',crime$살인_발생, '건')
+popup1 <- paste0(crime$name,'<br> 살인 : ',crime$살인_발생, '건')
 map4<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
   addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup1, color=~palette1(crime$살인_발생), group='살인')
 map4
 
 
 palette2<-colorNumeric(palette = 'Blues', domain = crime$폭력_발생)
-popup2 <- paste0(mymap$name,'<br> 폭력 : ',crime$폭력_발생, '건')
+popup2 <- paste0(crime$name,'<br> 폭력 : ',crime$폭력_발생, '건')
 map5<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
   addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup2, color=~palette2(crime$폭력_발생), group='폭력')
 map5
