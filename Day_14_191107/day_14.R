@@ -416,14 +416,14 @@ View(korpopmap2)
 crime <- read.csv('2017crime.csv')
 head(crime)
 palette1<-colorNumeric(palette = 'Oranges', domain = crime$살인_발생)
-popup1 <- paste0(crime$name,'<br> 살인 : ',crime$살인_발생, '건')
+popup1 <- paste0(mymap$name,'<br> 살인 : ',crime$살인_발생, '건')
 map4<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
   addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup1, color=~palette1(crime$살인_발생), group='살인')
 map4
 
 
 palette2<-colorNumeric(palette = 'Blues', domain = crime$폭력_발생)
-popup2 <- paste0(crime$name,'<br> 폭력 : ',crime$폭력_발생, '건')
+popup2 <- paste0(mymap$name,'<br> 폭력 : ',crime$폭력_발생, '건')
 map5<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
   addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup2, color=~palette2(crime$폭력_발생), group='폭력')
 map5
