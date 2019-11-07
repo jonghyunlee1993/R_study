@@ -413,9 +413,9 @@ mymap <- korpopmap2@data
 head(mymap)
 View(korpopmap2)
 
-crime <- read.csv('2017crime.csv')
+crime <- read.csv('2017crime.csv', fileEncoding = "euc-kr")
 head(crime)
-palette1<-colorNumeric(palette = 'Oranges', domain = crime$살인_발생)
+palette1<-colorNumeric(palette = 'Orange', domain = crime$살인_발생)
 popup1 <- paste0(mymap$name,'<br> 살인 : ',crime$살인_발생, '건')
 map4<-leaflet(korpopmap2) %>% addTiles() %>% setView(lat=37.559957 ,lng=126.975302 , zoom=11)%>%
   addPolygons(stroke=FALSE,smoothFactor=0.2,fillOpacity=.5, popup=popup1, color=~palette1(crime$살인_발생), group='살인')
