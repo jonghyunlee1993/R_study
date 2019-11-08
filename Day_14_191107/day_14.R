@@ -105,7 +105,7 @@ treemap(sales_df, vSize="saleAmt", index=c("region", "product"), title="A기업 
 
 # 인터랙티브 그래프 만들기
 # 패키지 준비하기
-install.packages("plotly")
+# install.packages("plotly")
 library(plotly)
 # ggplot으로 그래프 만들기
 library(ggplot2)
