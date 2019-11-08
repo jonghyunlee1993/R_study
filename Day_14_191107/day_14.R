@@ -355,7 +355,7 @@ leaflet(wifi_data) %>%
           lat = seoul_lonlat[2], 
           zoom = 11) %>% 
   addTiles() %>% 
-  addCircles(lng = ~lon, lat = ~lat) # 물결 표시 필수
+  addCircles(lng = ~lon, lat = ~lat) # 행으로 정보를 입력하는 경우 물결 표시 필수
 
 
 leaflet(wifi_data) %>% 
