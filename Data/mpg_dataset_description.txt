@@ -1,0 +1,15 @@
+mpg 데이터 셋
+
+manufacturer	제조사
+model		모델
+displ		배기량
+year		제조년도
+cyl		실린더 수
+trans		변속기
+drv		구동방식(f=전륜구동, r=후륜구동, 4=사륜구동)
+city		도시연비
+hwy		고속도로연비
+fl		연료의 종류
+class		자동차의 종류
+
+?데이터셋의 이름 -> 데이터 셋의 도큐먼트 확인 가능
