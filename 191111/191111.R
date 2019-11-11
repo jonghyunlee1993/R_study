@@ -163,22 +163,35 @@ d4 <- c("xxx yyy zzz")
 dd <- c(d1, d2, d3, d4)
 cps <- Corpus(VectorSource(dd))
 dtm <- DocumentTermMatrix(cps)
+# tf-idf 생성 방법
+# tf_idf <- DocumentTermMatrix(cps,
+#                           control = list(weighting = function(x) weightTfIdf(x, normalize = FALSE),
+#                                          stopwords = TRUE))
 as.matrix(dtm)
+# 속성 확인 가능
+# 현재는 term frequency로 되어 있음, 이는 자주 등장하는 단어는 중요하다고 가정
+# tf-idf는 공통적으로 자주 등장하는 단어에 대해서 패널티를 부여하는 방법임
 inspect(dtm)
 m <- as.matrix(dtm)
 com <- m %*% t(m)
 com
+# cosine 거리
 dist(com, method = "cosine")
+# Euclidean 거리
 dist(com, method = "Euclidean")
+
+
 # install.packages("lsa")
 library(lsa)
+# cosine 유사도
+# 1은 동일, 0은 독립
 cosine(com)
 
 # Install
-install.packages("tm")  # 텍스트 마이닝을 위한 패키지
-install.packages("SnowballC") # 어간추출을 위한 패키지
-install.packages("wordcloud") # word-cloud generator 
-install.packages("RColorBrewer") # color palettes
+# install.packages("tm")  # 텍스트 마이닝을 위한 패키지
+# install.packages("SnowballC") # 어간추출을 위한 패키지
+# install.packages("wordcloud") # word-cloud generator 
+# install.packages("RColorBrewer") # color palettes
 # Load
 library("tm")
 library("SnowballC")
@@ -194,6 +207,7 @@ docs <- Corpus(VectorSource(text))
 # 텍스트의 특수 문자 등을 대체하기 위해 tm_map () 함수를 사용하여 변환이 수행됩니다.
 # “/”,“@”및“|”을 공백으로 바꿉니다.
 toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+# tm_map은 gsub와 유사한 기능을 수행
 docs <- tm_map(docs, toSpace, "/")
 docs <- tm_map(docs, toSpace, "@")
 docs <- tm_map(docs, toSpace, "\\|")
@@ -204,8 +218,11 @@ docs <- tm_map(docs, content_transformer(tolower))
 # 수치 데이터 제거
 docs <- tm_map(docs, removeNumbers)
 # 영어 불용어 제거
+# stopwords는 대부분 문법적 기능을 수행하는 단어들
+# 한국어 불용어는 없음, 자체 제작한다
 docs <- tm_map(docs, removeWords, stopwords("english"))
 
+# 의미없는 단어를 제거하기 위해서 등록함
 # 벡터 구조로 사용자가 직접 불용어  설정 , 제거
 docs <- tm_map(docs, removeWords, c("blabla1", "blabla2")) 
 
