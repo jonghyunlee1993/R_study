@@ -26,11 +26,19 @@ com
 
 # 1번
 distance = as.matrix(dist(t(m), method = "Euclidean"))
-inds <- arrayInd(which.min(distance[distance > 0]), dim(distance))
+# inds <- arrayInd(which.min(distance[distance > 0]), dim(distance))
+# 뻘짓
+inds = which(distance == min(distance[distance > 0]), arr.ind=T)
+
 rnames = rownames(distance)[inds[,1]]
 cnames = colnames(distance)[inds[,2]]
 
-cat(rnames, cnames)
+len = length(rnames)/2
+
+for (i in 1:len){
+  cat(rnames[i], cnames[i], "\n")
+}
+
 
 # 2번
 holder = diag(com)

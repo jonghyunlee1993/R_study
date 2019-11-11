@@ -244,3 +244,76 @@ head(d, 10)
 wordcloud(words = d$word, freq = d$freq, min.freq = 1,
           max.words=200, random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
+
+
+# reshape package 실습
+# install.packages("reshape2")
+library(reshape2)
+
+head(french_fries)
+# time : 몇 주차 실험인가
+# treatment : 사용한 식용유의 종류
+# subject : 실험 대상자
+# rep : 이 측정이 몇 번째 반복인가
+# potato : 감자 맛
+# buttery : 버터 맛
+# grassy : 풀맛
+# rancid : 신맛
+# painty : 안 좋은 냄새
+
+# 문제 : butter 열의 평균, grassy 열의 평균, rancid 의 평균, painty 의 평균을 구하시오.
+library(dplyr)
+data = as.data.frame(french_fries)
+data %>% summarise(avg_potato = mean(potato, na.rm = T), 
+                   avg_butter = mean(buttery, na.rm = T),
+                   avg_grassy = mean(grassy, na.rm = T),
+                   avg_rancid = mean(rancid, na.rm = T),
+                   avg_painty = mean(painty, na.rm = T))
+
+# melt는 열이 긴 테이블을 행이 긴 테이블로 변경 
+m <- melt(french_fries, id.vars=1:4) # 첫 4행은 유지하겠다는 의미
+head(m)
+library(dplyr)
+m %>% group_by(variable) %>% summarize(평균=mean(value, na.rm=T))
+m2 <- melt(french_fries, id.vars=1:4, na.rm=T)
+dim(m2)
+dim(m)
+m2 %>% group_by(variable) %>% summarize(평균=mean(value))
+
+# dcast는 행으로 길게 만든 테이블을 다시 열로 길게 만드는 것을 의미함
+r <- dcast(m, time + treatment + subject + rep ~ ...)
+head(r)
+
+rownames(r) <- NULL
+rownames(french_fries) <- NULL
+
+identical(r, french_fries)
+
+# 책에 있는 예제들
+
+str(airquality)
+dim(airquality)
+View(airquality)
+names(airquality)
+
+names(airquality) <- tolower(names(airquality))
+head(airquality)
+names(airquality)
+
+melt_test <- melt(airquality)
+dim(melt_test)
+melt_test2 <- melt(airquality, id.vars=c("month", "wind"), measure.vars="ozone")
+head(melt_test2)
+dim(melt_test2)
+
+melt_test3 <- melt(airquality, id.vars=c("month", "wind"))
+head(melt_test3)
+dim(melt_test3)
+
+aq_melt <- melt(airquality, id.vars=c("month", "day"), na.rm=T)
+dim(aq_melt)
+aq_dcast <- dcast(aq_melt, month+day ~ variable)
+View(airquality); 
+View(aq_melt); 
+View(aq_dcast); 
+dcast(aq_melt, month~variable, mean)
