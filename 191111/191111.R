@@ -41,24 +41,30 @@ gsub(" +", " ", "i   love    banana")
 gsub("공구.*", "공구", "공구해주세요") 
 
 
+# apply 계열의 함수들 / 아규먼트로 함수를 받음
+# 고차함수 / 고계함수라고 부르기도 함
+# 함수를 일반 데이터 값처럼 다루는 함수를 지칭
 weight <- c(65.4, 55, 380, 72.2, 51, NA)
 height <- c(170, 155, NA, 173, 161, 166)
 gender <- c("M", "F", "M", "M", "F", "F")
 
 df <- data.frame(w=weight, h=height)
 df
-
+# sum() 함수에 전달할 아규먼트는 4번째 아규먼트부터
 apply(df, 1, sum, na.rm=TRUE)
 apply(df, 2, sum, na.rm=TRUE)
 lapply(df, sum, na.rm=TRUE)
 sapply(df, sum, na.rm=TRUE)
+# 범주 값에 대한 연산
 tapply(df$w, gender, mean, na.rm=TRUE)
 tapply(1:6, gender, sum, na.rm=TRUE)
+# multiple 아규먼트에 대해서 적용 가능
+# 첫번째 값만 함수를 받음
 mapply(paste, 1:5, LETTERS[1:5], month.abb[1:5])
 count <- 1
 myf <- function(x, wt=T){
   print(paste(x,"(",count,")"))
-  Sys.sleep(10)
+  Sys.sleep(1)
   if(wt) 
     r <- paste("*", x, "*")
   else
@@ -79,7 +85,7 @@ rr2[1,1]
 rr2[1,"w"]
 
 
-r <- sapply(df, myf)
+r <- sapply(df, myf, F)
 str(r)
 
 
@@ -89,7 +95,7 @@ library(wordcloud)
 library(RColorBrewer)
 library(stringr)
 useSejongDic()
-install.packages("tm")
+# install.packages("tm")
 library(tm)
 
 lunch <- c("커피 파스타 치킨 샐러드 아이스크림",
@@ -105,7 +111,10 @@ tdm <- TermDocumentMatrix(cps)
 tdm
 as.matrix(tdm)
 
+# tm 패키지는 corpus 객체를 사용함
 cps <- VCorpus(VectorSource(lunch))
+# TDM: 단어를 중심으로 도큐먼트의 분포 / 행: 단어, 열: 도큐먼트
+# DTM: 도큐먼트를 중심으로 단어의 분포 / 행: 도큐먼트, 열: 단어
 tdm <- TermDocumentMatrix(cps, 
                           control=list(wordLengths = c(1, Inf)))
 tdm
@@ -115,21 +124,36 @@ colnames(m) <- c("doc1", "doc2", "doc3", "doc4", "doc5", "doc6")
 rowSums(m)
 colSums(m)
 
-
+# matrix mulitply
 com <- m %*% t(m)
+com # 함께 발화, 연결성, term의 상관관계
+com[lower.tri(com, diag = F)] <- c(0)
 com
 
-install.packages("qgraph")
+# DTM
+dtm <- DocumentTermMatrix(cps, 
+                          control=list(wordLengths = c(1, Inf)))
+dtm
+(m2 <- as.matrix(dtm))
+
+# DTM = t(TDM)
+dtm2 = t(as.matrix(tdm))
+rowSums(dtm2)
+colSums(dtm2)
+
+
+# install.packages("qgraph")
 library(qgraph)
 
+# log 는 표준화를 위해서
+# co-ocurrence matrix에서 diagonal element는 해당 corupus에서 발화 정도
 qgraph(com, labels=rownames(com), diag=F, 
        layout='spring',  edge.color='blue', 
        vsize=log(diag(com)*800))
 
 
-
-
-install.packages("proxy")
+# 문서 간의 유사도 분석
+# install.packages("proxy")
 library(proxy)
 dd <- NULL
 d1 <- c("aaa bbb ccc")
@@ -146,7 +170,7 @@ com <- m %*% t(m)
 com
 dist(com, method = "cosine")
 dist(com, method = "Euclidean")
-install.packages("lsa")
+# install.packages("lsa")
 library(lsa)
 cosine(com)
 
