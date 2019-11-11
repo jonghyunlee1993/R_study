@@ -262,7 +262,7 @@ head(french_fries)
 # painty : 안 좋은 냄새
 
 # 문제 : butter 열의 평균, grassy 열의 평균, rancid 의 평균, painty 의 평균을 구하시오.
-library(dplyr)
+library(reshape2)
 data = as.data.frame(french_fries)
 data %>% summarise(avg_potato = mean(potato, na.rm = T), 
                    avg_butter = mean(buttery, na.rm = T),

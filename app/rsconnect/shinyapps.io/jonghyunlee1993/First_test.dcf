@@ -1,0 +1,12 @@
+name: First_test
+title: First_test
+username:
+account: jonghyunlee1993
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1452459
+bundleId: 2579415
+url: https://jonghyunlee1993.shinyapps.io/First_test/
+when: 1573457526.22876
+asMultiple: FALSE
+asStatic: FALSE
