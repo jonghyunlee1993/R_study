@@ -26,3 +26,24 @@ df_b[5, ]
 df_b[5, 1]
 
 df_b[1,12]
+
+# 
+
+df_c = df %>% mutate(eng_math = eng + math) %>% 
+  mutate(final = total + ifelse(mgr_code == "A", 5, 
+                                ifelse(mgr_code == "B", 15, 20))) %>% 
+  filter(eng_math >= 120) %>% 
+  select(std_no, eng_math) %>% 
+  arrange(desc(eng_kor))
+  
+df_c
+
+# 
+
+df_d = df %>% mutate(kor_local = kor + ifelse(local_code == "A", 5, 
+                                              ifelse(local_code == "B", 10, 15))) %>% 
+  filter(local_code != "C" & kor_local >= 50) %>% 
+  select(std_no, local_code, kor_local) %>% 
+  arrange(kor_local)
+  
+df_d
