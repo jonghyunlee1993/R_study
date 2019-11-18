@@ -1,0 +1,33 @@
+rm(list = ls())
+data = swiss
+
+criteria = mean(data$Education)
+data = data %>% 
+  mutate(HL_edu = ifelse(Education >= criteria, 1, 0))
+
+t.test(Fertility ~ HL_edu, data = data)
+
+## dataset describtion
+
+             Fertility Agriculture Examination Education Catholic Infant.Mortality
+Courtelary        80.2        17.0          15        12        9.96             22.2
+Delemont          83.1        45.1           6         9        84.84             22.2
+Franches           92.5        39.7           5         5         93.40             20.2
+Moutier              85.8        36.5          12         7       33.77             20.3
+Neuveville         76.9        43.5          17        15       5.16             20.6
+Porrentruy        76.1        35.3           9         7         90.57             26.6
+
+## result
+
+> t.test(Fertility ~ HL_edu, data = data)
+
+	Welch Two Sample t-test
+
+data:  Fertility by HL_edu
+t = 2.8947, df = 25.303, p-value = 0.007709
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+  3.182803 18.847001
+sample estimates:
+mean in group 0 mean in group 1 
+       74.12667        63.11176 
