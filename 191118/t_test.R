@@ -17,5 +17,10 @@ t.test(finedust ~ area, dust)
 t.test(중구$finedust, 성북구$finedust)
 
 boxplot(중구$finedust, 성북구$finedust)
+boxplot(finedust ~ area, dust)
 
-
+library(ggplot2)
+p <- ggplot(dust, aes(x=area, y=finedust, fill=area)) + 
+  geom_violin() + geom_boxplot(width=0.1) +
+  theme_minimal()
+p
