@@ -13,3 +13,6 @@ df_melt
 dcast(df_melt, gender ~ variable + region)
 dcast(df_melt, gender ~ region + variable)
 dcast(df_melt, gender + region ~ variable)
+
+res = lm(formula = mpg ~ ., data = mtcars)
+summary(res)
