@@ -4,7 +4,8 @@ library(KoNLP)
 library(wordcloud)
 library(stringr)
 
-data = readLines("data/공구.txt", encoding="UTF-8")
+data = readLines("../Data/공구.txt", encoding="UTF-8")
+
 data_crop = NULL
 
 for (i in 1:length(data)){
@@ -25,7 +26,7 @@ useSejongDic()
 noun_data = extractNoun(data_crop)
 noun_data = unlist(noun_data)
 
-windowsFonts(lett=windowsFont("휴먼옛체"))
+windowsFonts(lett = windowsFont("휴먼옛체"))
 
 noun_data_2_char <- Filter(function(x) {nchar(x) >= 2}, noun_data)
 word_table = table(noun_data_2_char)
